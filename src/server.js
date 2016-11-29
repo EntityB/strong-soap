@@ -319,8 +319,9 @@ class Server extends Base {
 
       self._envelope(envelope, includeTimestamp);
 
-      var firstSchema;
-      for (firstSchema in self.wsdl.definitions.schemas) break;
+      var firstSchema, schemaName;
+      for (schemaName in self.wsdl.definitions.schemas) break;
+      firstSchema = self.wsdl.definitions.schemas[schemaName];
 
       var message = envelope.body.toString({pretty: true, xsd: firstSchema});
       var xml = envelope.doc.end({pretty: true, xsd: firstSchema});
