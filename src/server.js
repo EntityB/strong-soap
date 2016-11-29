@@ -318,8 +318,12 @@ class Server extends Base {
       self.xmlHandler.jsonToXml(envelope.body, nsContext, outputBodyDescriptor, result);
 
       self._envelope(envelope, includeTimestamp);
-      var message = envelope.body.toString({pretty: true});
-      var xml = envelope.doc.end({pretty: true});
+
+      var firstSchema;
+      for (firstSchema in self.wsdl.definitions.schemas) break;
+
+      var message = envelope.body.toString({pretty: true, xsd: firstSchema});
+      var xml = envelope.doc.end({pretty: true, xsd: firstSchema});
 
       debug('Server handleResult. xml: %s ', xml);
       callback(xml);
