@@ -221,8 +221,12 @@ class Client extends Base {
       self.security.postProcess(envelope.header, envelope.body);
     }
 
-    message = envelope.body.toString({pretty: true});
-    xml = envelope.doc.end({pretty: true});
+    var firstSchema, schemaName;
+    for (schemaName in self.wsdl.definitions.schemas) break;
+    firstSchema = self.wsdl.definitions.schemas[schemaName];
+
+    message = envelope.body.toString({pretty: true, xsd: firstSchema});
+    xml = envelope.doc.end({pretty: true, xsd: firstSchema});
 
     debug('Request envelope: %s', xml);
 
